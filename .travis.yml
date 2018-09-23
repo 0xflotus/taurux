@@ -7,6 +7,6 @@ os:
 after_success:
   - echo "After Success"
   - dart ./taurus.dart -h
-  - dart https://www.redbullradio.com/shows/main-stage/episodes/efdemin-live-at-nachtdigital-2011--3 -D --target /tmp
+  - dart ./taurus.dart https://www.redbullradio.com/shows/main-stage/episodes/efdemin-live-at-nachtdigital-2011--3 -D --target /tmp
   - rm /tmp/efdemin-live-at-nachtdigital-2011--3.mp3
   - echo "Finished"
