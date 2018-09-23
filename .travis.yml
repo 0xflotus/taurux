@@ -2,3 +2,5 @@ language: dart
 dart:
   - "2.0.0"
 os: osx
+after_deploy:
+  - dart taurus.dart -h
