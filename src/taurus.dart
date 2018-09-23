@@ -14,7 +14,7 @@ const helpFlag = 'help';
 const targetOption = 'target';
 
 main(List<String> arguments) {
-  final argParser = new Arg Parser()
+  final argParser = new ArgParser()
     ..addOption(
         cbrOption, defaultsTo: '128',
         abbr: 'c',
