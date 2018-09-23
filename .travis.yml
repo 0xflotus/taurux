@@ -6,6 +6,6 @@ os:
   - osx
 after_success:
   - echo "After Success"
-  - dart --snapshot=taurus.snapshot ./taurus.dart && echo $?
-  - dart ./taurus.snapshot -h && echo $?
+  - dart --snapshot=taurus.snapshot ./taurus.dart || exit 1
+  - dart ./taurus.snapshot -h || exit 1
   - echo "Finished"
