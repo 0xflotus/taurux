@@ -15,10 +15,10 @@ Installation
 Usage
 =====
 
-``dart taurus.dart -h``
+``dart src/taurus.dart -h``
 
 Build Snapshot
 ==============
 
-| ``dart --snapshot=taurus.snapshot taurus.dart``
+| ``dart --snapshot=taurus.snapshot src/taurus.dart``
 | ``dart taurus.snapshot -h``
