@@ -6,30 +6,37 @@ import 'dart:convert';
 import 'dart:io';
 
 var debug = false;
+var showDownloadLink = false;
 
 const cbrOption = 'cbr';
 const dryRunFlag = 'dry-run';
 const debugFlag = 'debug';
 const helpFlag = 'help';
 const targetOption = 'target';
+const bestTryFlag = 'best-try';
+const showLinkFlag = 'show-link';
 
 main(List<String> arguments) {
-
   if (arguments.isEmpty) {
-    print('There are no links to download...');
-    return;
+    print('No arguments');
   }
 
   final argParser = new ArgParser()
     ..addOption(
-        cbrOption, defaultsTo: '128',
+        cbrOption,
         abbr: 'c',
         allowed: ['64', '128', '192', '256'],
         help: 'Specify the constant bit rate')..addOption(
         targetOption, defaultsTo: '.', help: 'specify a target directory')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
-        help: 'dry run without download')..addFlag(debugFlag, negatable: false,
+        help: 'dry run without download')..addFlag(
+        bestTryFlag, negatable: false,
+        abbr: 'b',
+        help: 'trying to find the best cbr')..addFlag(
+        showLinkFlag, negatable: false,
+        help: 'display the download link')..addFlag(
+        debugFlag, negatable: false,
         abbr: 'D',
         help: 'specify debug mode')..addFlag(
         helpFlag, negatable: false, abbr: 'h', help: 'Show Usage');
@@ -48,12 +55,28 @@ main(List<String> arguments) {
   }
 
   debug = argResults[debugFlag];
+  showDownloadLink = argResults[showLinkFlag];
 
   var rest = argResults.rest;
+
+  if (rest.isEmpty) {
+    print('There are no links to download...');
+    return;
+  }
 
   for (var link in rest) {
     if (argResults[dryRunFlag]) break;
     dl(link, argResults[cbrOption], argResults[targetOption]);
+  }
+}
+
+String getBestTry(String link) async {
+  var cbrs = ['64', '128', '192', '256', '320'];
+  for (var i = cbrs.length - 1; i >= 0; i--) {
+    http.Response res = await http.get('$link${cbrs[i]}');
+    if (res.statusCode == 200) {
+      return '$link${cbrs[i]}';
+    }
   }
 }
 
@@ -72,7 +95,13 @@ dl(String link, String cbr, String target) async {
     var sub1 = x.substring(begin);
     var begin2 = sub1.indexOf('audioURL');
     var end2 = sub1.indexOf('background');
-    var dl = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=$cbr';
+    var base = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=';
+    var dl = cbr == null ? await getBestTry(base) : '$base$cbr';
+
+    if (showDownloadLink) {
+      print(dl);
+      return;
+    }
 
     if (debug) print(dl);
 
@@ -83,12 +112,11 @@ dl(String link, String cbr, String target) async {
 
       if (response.statusCode == 200) {
         print('Writing bytes...');
-        response.pipe(new File('$target/$name.mp3').openWrite())
-            .then((x) => print('ready'));
+        response.pipe(new File('$target/$name.mp3').openWrite());
       } else {
         print('Resource not available');
       }
-    }); 
+    });
   } catch (e) {
     print('An error occured, Please check your previous command');
   }
