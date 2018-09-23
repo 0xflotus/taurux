@@ -12,6 +12,7 @@ const cbrOption = 'cbr';
 const dryRunFlag = 'dry-run';
 const debugFlag = 'debug';
 const helpFlag = 'help';
+const targetOption = 'target';
 
 main(List<String> arguments) {
   final argParser = new ArgParser()
@@ -20,6 +21,7 @@ main(List<String> arguments) {
         abbr: 'c',
         allowed: ['64', '128', '192', '256'],
         help: 'Specify the constant bit rate')
+    ..addOption(targetOption, defaultsTo: '.', help: 'specify a target directory')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
         help: 'dry run without download')..addFlag(debugFlag, negatable: false,
@@ -45,12 +47,12 @@ main(List<String> arguments) {
 
   rest.forEach((link) {
     if (!argResults[dryRunFlag]) {
-      dl(link, argResults[cbrOption]);
+      dl(link, argResults[cbrOption], argResults[targetOption]);
     }
   });
 }
 
-dl(String link, String cbr) async {
+dl(String link, String cbr, String target) async {
   var split = link.split('/');
   var name = split[split.length - 1];
   http.Response response = await http.get(link);
@@ -73,7 +75,7 @@ dl(String link, String cbr) async {
       .then((HttpClientRequest request) => request.close())
       .then((HttpClientResponse response) {
     print('Writing bytes...');
-    response.pipe(new File('$name.mp3').openWrite())
+    response.pipe(new File('$target/$name.mp3').openWrite())
         .then((x) => print('ready'));
   });
 }
