@@ -1,8 +1,8 @@
 # taurus
 This is a Proof of Concept for the taurus app
 
-#Installation
+# Installation
 `pub get`
 
-#Usage
+# Usage
 `dart taurus.dart -h`
