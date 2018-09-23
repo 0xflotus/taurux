@@ -1,6 +1,6 @@
-.. image:: https://travis-ci.com/0xflotus/taurus.svg?branch=master
-    :target: https://travis-ci.com/0xflotus/taurus
-
+.. image:: https://travis-ci.org/0xflotus/taurus.svg?branch=master
+    :target: https://travis-ci.org/0xflotus/taurus
+    
 taurus
 ======
 
