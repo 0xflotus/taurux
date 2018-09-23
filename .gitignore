@@ -1,0 +1,4 @@
+.packages
+.idea
+pubspec.lock
+*.mp3
