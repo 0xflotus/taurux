@@ -14,6 +14,12 @@ const helpFlag = 'help';
 const targetOption = 'target';
 
 main(List<String> arguments) {
+
+  if (arguments.isEmpty) {
+    print('There are no links to download...');
+    return;
+  }
+
   final argParser = new ArgParser()
     ..addOption(
         cbrOption, defaultsTo: '128',
@@ -44,11 +50,6 @@ main(List<String> arguments) {
   debug = argResults[debugFlag];
 
   var rest = argResults.rest;
-
-  if (rest.isEmpty) {
-    print('There are no links to download...');
-    return;
-  }
 
   for (var link in rest) {
     if (argResults[dryRunFlag]) break;
