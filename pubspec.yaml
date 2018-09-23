@@ -1,0 +1,15 @@
+name: taurus
+description: A PoC for the Taurus App
+version: 0.1.0
+author: 0xflotus
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  http: any
+  html: any
+  args: any
+
+executables:
+  taurus: taurus

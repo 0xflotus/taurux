@@ -1,2 +1,2 @@
 # taurus
-The PoC of the taurus app
+This is a Proof of Concept for the taurus app
