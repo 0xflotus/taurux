@@ -4,6 +4,10 @@ dart:
 os: 
   - linux
   - osx
+notifications:
+  email:
+    on_success: always 
+    on_failure: always
 after_success:
   - echo "After Success"
   - dart --snapshot=taurus.snapshot ./taurus.dart || exit 1
