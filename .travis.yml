@@ -4,3 +4,4 @@ dart:
 os: osx
 after_success:
   - echo "After Success"
+  - dart ./taurus.dart -h
