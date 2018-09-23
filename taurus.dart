@@ -19,7 +19,7 @@ main(List<String> arguments) {
         cbrOption, defaultsTo: '128',
         abbr: 'c',
         allowed: ['64', '128', '192', '256'],
-        help: 'Specify the constant bit rate')..addOption(
+        help: 'Specify the constant bit rate')..addOp tion(
         targetOption, defaultsTo: '.', help: 'specify a target directory')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
