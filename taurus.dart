@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:io';
 
 var debug = false;
-var active = false;
 
 const cbrOption = 'cbr';
 const dryRunFlag = 'dry-run';
@@ -20,8 +19,8 @@ main(List<String> arguments) {
         cbrOption, defaultsTo: '128',
         abbr: 'c',
         allowed: ['64', '128', '192', '256'],
-        help: 'Specify the constant bit rate')
-    ..addOption(targetOption, defaultsTo: '.', help: 'specify a target directory')
+        help: 'Specify the constant bit rate')..addOption(
+        targetOption, defaultsTo: '.', help: 'specify a target directory')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
         help: 'dry run without download')..addFlag(debugFlag, negatable: false,
@@ -29,7 +28,13 @@ main(List<String> arguments) {
         help: 'specify debug mode')..addFlag(
         helpFlag, negatable: false, abbr: 'h', help: 'Show Usage');
 
-  ArgResults argResults = argParser.parse(arguments);
+  ArgResults argResults;
+  try {
+    argResults = argParser.parse(arguments);
+  } catch (e) {
+    print('Error: Wrong option or flag');
+    return;
+  }
 
   if (argResults[helpFlag]) {
     print(argParser.usage);
@@ -40,42 +45,50 @@ main(List<String> arguments) {
 
   var rest = argResults.rest;
 
-  if (rest.length == 0) {
+  if (rest.isEmpty) {
     print('There are no links to download...');
     return;
   }
 
-  rest.forEach((link) {
-    if (!argResults[dryRunFlag]) {
-      dl(link, argResults[cbrOption], argResults[targetOption]);
-    }
-  });
+  for (var link in rest) {
+    if (argResults[dryRunFlag]) break;
+    dl(link, argResults[cbrOption], argResults[targetOption]);
+  }
 }
 
 dl(String link, String cbr, String target) async {
   var split = link.split('/');
   var name = split[split.length - 1];
-  http.Response response = await http.get(link);
+  try {
+    http.Response response = await http.get(link);
+    Document document = parser.parse(response.body);
 
-  Document document = parser.parse(response.body);
+    var x = document.getElementsByTagName('script')
+        .where((Element el) => el.text.contains('INITIAL'))
+        .map((Element el) => el.text.substring(27))
+        .toList().toString();
+    var begin = x.indexOf(name);
+    var sub1 = x.substring(begin);
+    var begin2 = sub1.indexOf('audioURL');
+    var end2 = sub1.indexOf('background');
+    var dl = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=$cbr';
 
-  var x = document.getElementsByTagName('script')
-      .where((Element el) => el.text.contains('INITIAL'))
-      .map((Element el) => el.text.substring(27))
-      .toList().toString();
-  var begin = x.indexOf(name);
-  var sub1 = x.substring(begin);
-  var begin2 = sub1.indexOf('audioURL');
-  var end2 = sub1.indexOf('background');
-  var dl = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=$cbr';
-  if (debug) {
-    print(dl);
+    if (debug) print(dl);
+
+    new HttpClient().getUrl(Uri.parse(dl))
+        .then((HttpClientRequest request) => request.close())
+        .then((HttpClientResponse response) {
+      if (debug) print('Status Code: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        print('Writing bytes...');
+        response.pipe(new File('$target/$name.mp3').openWrite())
+            .then((x) => print('ready'));
+      } else {
+        print('Resource not available');
+      }
+    }); 
+  } catch (e) {
+    print('An error occured, Please check your previous command');
   }
-  new HttpClient().getUrl(Uri.parse(dl))
-      .then((HttpClientRequest request) => request.close())
-      .then((HttpClientResponse response) {
-    print('Writing bytes...');
-    response.pipe(new File('$target/$name.mp3').openWrite())
-        .then((x) => print('ready'));
-  });
 }
