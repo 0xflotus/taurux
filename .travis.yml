@@ -2,6 +2,5 @@ language: dart
 dart:
   - "2.0.0"
 os: osx
-after_deploy:
-  - echo "After Deploy"
-  - dart taurus.dart -h
+after_success:
+  - echo "After Success"
