@@ -1,7 +1,9 @@
 language: dart
 dart:
   - "2.0.0"
-os: osx
+os: 
+  - linux
+  - osx
 after_success:
   - echo "After Success"
   - dart ./taurus.dart -h
