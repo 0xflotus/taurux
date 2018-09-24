@@ -73,11 +73,13 @@ String getBestTry(String link) async {
   var cbrs = availableBitRates;
   for (var i = cbrs.length - 1; i >= 0; i--) {
     http.Response res = await http.get('$link${cbrs[i]}');
-    if (res.statusCode == 200) {
+    if (isOk(res.statusCode)) {
       return '$link${cbrs[i]}';
     }
   }
 }
+
+bool isOk(int statusCode) => statusCode == HttpStatus.ok;
 
 dl(String link, String cbr, String target) async {
   var split = link.split('/');
@@ -109,7 +111,7 @@ dl(String link, String cbr, String target) async {
         .then((HttpClientResponse response) {
       if (debug) print('Status Code: ${response.statusCode}');
 
-      if (response.statusCode == 200) {
+      if (isOk(response.statusCode)) {
         print('Writing bytes...');
         response.pipe(new File('$target/$name.mp3').openWrite());
       } else {
