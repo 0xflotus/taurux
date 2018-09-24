@@ -78,7 +78,7 @@ main(List<String> arguments) {
   }
 }
 
-String getBestTry(String link) async {
+getBestTry(String link) async {
   var cbrs = availableBitRates;
   for (var i = cbrs.length - 1; i >= 0; i--) {
     http.Response res = await http.get('$link${cbrs[i]}');
