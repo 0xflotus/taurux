@@ -1,10 +1,10 @@
-.. image:: https://travis-ci.org/0xflotus/taurus.svg?branch=master
-    :target: https://travis-ci.org/0xflotus/taurus
+.. image:: https://travis-ci.org/0xflotus/taurux.svg?branch=master
+    :target: https://travis-ci.org/0xflotus/taurux
     
-taurus
+taurux
 ======
 
-This is a Proof of Concept for the taurus app. Quick and dirty
+This is a Proof of Concept for the taurux app. Quick and dirty
 implementation in Dart.
 
 Installation
@@ -15,10 +15,10 @@ Installation
 Usage
 =====
 
-``dart src/taurus.dart -h``
+``dart src/taurux.dart -h``
 
 Build Snapshot
 ==============
 
-| ``dart --snapshot=taurus.snapshot src/taurus.dart``
-| ``dart taurus.snapshot -h``
+| ``dart --snapshot=taurux.snapshot src/taurux.dart``
+| ``dart taurux.snapshot -h``
