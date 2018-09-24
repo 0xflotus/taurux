@@ -5,6 +5,8 @@ import 'package:args/args.dart';
 import 'dart:convert';
 import 'dart:io';
 
+import 'util.dart';
+
 var debug = false;
 var showDownloadLink = false;
 var best = false;
@@ -88,11 +90,8 @@ getBestTry(String link) async {
   }
 }
 
-bool isOk(int statusCode) => statusCode == HttpStatus.ok;
-
 dl(String link, String cbr, String target) async {
-  var split = link.split('/');
-  var name = split[split.length - 1];
+  var name = splitLink(link);
   try {
     http.Response response = await http.get(link);
     Document document = parser.parse(response.body);
@@ -101,11 +100,8 @@ dl(String link, String cbr, String target) async {
         .where((Element el) => el.text.contains('INITIAL'))
         .map((Element el) => el.text.substring(27))
         .toList().toString();
-    var begin = x.indexOf(name);
-    var sub1 = x.substring(begin);
-    var begin2 = sub1.indexOf('audioURL');
-    var end2 = sub1.indexOf('background');
-    var base = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=';
+    var sub1 = x.substring(x.indexOf(name));
+    var base = '${sub1.substring(sub1.indexOf('audioURL') + 11, sub1.indexOf('background') - 3)}?cbr=';
     var dl = cbr == null
         ? (best ? await getBestTry(base) : '$base${128}')
         : '$base$cbr';
