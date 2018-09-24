@@ -4,6 +4,7 @@ dart:
 os: 
   - linux
   - osx
+sudo: required
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install loc ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get install cloc ; fi
