@@ -13,3 +13,4 @@ after_success:
   - dart ./taurux.snapshot -h || exit 1
   - echo "Finished"
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ./src ; fi
+  - ./create_authors.sh && cat ./AUTHORS
