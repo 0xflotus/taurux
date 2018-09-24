@@ -10,3 +10,4 @@ dependencies:
   http: any
   html: any
   args: any
+  test: any
