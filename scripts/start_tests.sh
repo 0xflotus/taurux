@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pub run test ./test/test_util.dart
+ls -1 ../test/** | xargs pub run test
