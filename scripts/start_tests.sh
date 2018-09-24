@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ls -1 ../test/** | xargs pub run test
+ls -1 ./test/** | xargs pub run test
