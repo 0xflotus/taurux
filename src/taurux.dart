@@ -7,8 +7,10 @@ import 'dart:io';
 
 var debug = false;
 var showDownloadLink = false;
+var best = false;
+var globalName = null;
 
-const availableBitRates = ['64', '128', '192', '256', '320'];
+const availableBitRates = ['64', '128', '192', '256'];
 
 const cbrOption = 'cbr';
 const dryRunFlag = 'dry-run';
@@ -16,6 +18,8 @@ const debugFlag = 'debug';
 const helpFlag = 'help';
 const targetOption = 'target';
 const showLinkFlag = 'show-link';
+const bestTryFlag = 'best-try';
+const nameOption = 'name';
 
 main(List<String> arguments) {
   if (arguments.isEmpty) {
@@ -29,10 +33,13 @@ main(List<String> arguments) {
         abbr: 'c',
         allowed: availableBitRates,
         help: 'Specify the constant bit rate')..addOption(
-        targetOption, defaultsTo: '.', help: 'specify a target directory')
+        targetOption, defaultsTo: '.',
+        help: 'specify a target directory')..addOption(
+        nameOption, help: 'specify a name')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
         help: 'dry run without download')..addFlag(
+        bestTryFlag, help: 'try to find best cbr', abbr: 'b')..addFlag(
         showLinkFlag, negatable: false,
         help: 'display the download link')..addFlag(
         debugFlag, negatable: false,
@@ -55,6 +62,8 @@ main(List<String> arguments) {
 
   debug = argResults[debugFlag];
   showDownloadLink = argResults[showLinkFlag];
+  best = argResults[bestTryFlag];
+  globalName = argResults[nameOption];
 
   var rest = argResults.rest;
 
@@ -97,7 +106,9 @@ dl(String link, String cbr, String target) async {
     var begin2 = sub1.indexOf('audioURL');
     var end2 = sub1.indexOf('background');
     var base = '${sub1.substring(begin2 + 11, end2 - 3)}?cbr=';
-    var dl = cbr == null ? await getBestTry(base) : '$base$cbr';
+    var dl = cbr == null
+        ? (best ? await getBestTry(base) : '$base${128}')
+        : '$base$cbr';
 
     if (showDownloadLink) {
       print(dl);
@@ -113,7 +124,8 @@ dl(String link, String cbr, String target) async {
 
       if (isOk(response.statusCode)) {
         print('Writing bytes...');
-        response.pipe(new File('$target/$name.mp3').openWrite());
+        response.pipe(
+            new File('$target/${globalName ?? name}.mp3').openWrite());
       } else {
         print('Resource not available');
         exit(1);
