@@ -4,8 +4,12 @@ dart:
 os: 
   - linux
   - osx
+before_install:
+  - brew update
+  - brew install loc
 after_success:
   - echo "After Success"
   - dart --snapshot=taurux.snapshot ./src/taurux.dart || exit 1
   - dart ./taurux.snapshot -h || exit 1
   - echo "Finished"
+  - loc
