@@ -14,4 +14,4 @@ after_success:
   - dart ./taurux.snapshot -h || exit 1
   - echo "Finished"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then loc ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ./src ; fi
