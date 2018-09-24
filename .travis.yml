@@ -5,6 +5,7 @@ dart:
 os: 
   - linux
   - osx
+  - windows
 sudo: required
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install cloc ; fi
