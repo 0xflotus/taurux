@@ -8,6 +8,6 @@ void main() {
 
   test('statusCode == 200', () {
     expect(isOk(200), isTrue);
-    expect(isOk(201), isFalse);
+    expect(isOk(200), isFalse);
   });
 }
