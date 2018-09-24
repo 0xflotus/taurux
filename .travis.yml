@@ -13,17 +13,5 @@ after_success:
   - dart --snapshot=taurux.snapshot ./src/taurux.dart || exit 1
   - echo "Execution"
   - dart ./taurux.snapshot -h || exit 1
-  - dart ./taurux.snapshot $EXAMPLE_LINK || exit 1
-  - dart ./taurux.snapshot $EXAMPLE_LINK --target /tmp || exit 1
-  - dart ./taurux.snapshot $EXAMPLE_LINK --target /tmp --name foo --cbr 128 || exit 1
-  - du -h $EXAMPLE_FILE || exit 1
-  - du -h /tmp/$EXAMPLE_FILE || exit 1
-  - du -h /tmp/foo.mp3 || exit 1
-  - echo "Cleanup"
-  - rm $EXAMPLE_FILE || exit 1
-  - rm /tmp/$EXAMPLE_FILE || exit 1
-  - rm /tmp/foo.mp3 || exit 1
-  - echo "Finished"
+  - if [[ "USE_TAURUX" == "true" ]]; then ./scripts/use_taurux.sh ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ./src ; fi
-script:
-  - echo $?
