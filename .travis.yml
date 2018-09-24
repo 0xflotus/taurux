@@ -1,6 +1,7 @@
 language: dart
 dart:
   - "2.0.0"
+  - "2.0.1"
 os: 
   - linux
   - osx
