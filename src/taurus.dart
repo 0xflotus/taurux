@@ -8,32 +8,31 @@ import 'dart:io';
 var debug = false;
 var showDownloadLink = false;
 
+const availableBitRates = ['64', '128', '192', '256', '320'];
+
 const cbrOption = 'cbr';
 const dryRunFlag = 'dry-run';
 const debugFlag = 'debug';
 const helpFlag = 'help';
 const targetOption = 'target';
-const bestTryFlag = 'best-try';
 const showLinkFlag = 'show-link';
 
 main(List<String> arguments) {
   if (arguments.isEmpty) {
     print('No arguments');
+    exit(1);
   }
 
   final argParser = new ArgParser()
     ..addOption(
         cbrOption,
         abbr: 'c',
-        allowed: ['64', '128', '192', '256'],
+        allowed: availableBitRates,
         help: 'Specify the constant bit rate')..addOption(
         targetOption, defaultsTo: '.', help: 'specify a target directory')
     ..addFlag(dryRunFlag, negatable: false,
         abbr: 'd',
         help: 'dry run without download')..addFlag(
-        bestTryFlag, negatable: false,
-        abbr: 'b',
-        help: 'trying to find the best cbr')..addFlag(
         showLinkFlag, negatable: false,
         help: 'display the download link')..addFlag(
         debugFlag, negatable: false,
@@ -46,12 +45,12 @@ main(List<String> arguments) {
     argResults = argParser.parse(arguments);
   } catch (e) {
     print('Error: Wrong option or flag');
-    return;
+    exit(1);
   }
 
   if (argResults[helpFlag]) {
     print(argParser.usage);
-    return;
+    exit(0);
   }
 
   debug = argResults[debugFlag];
@@ -61,7 +60,7 @@ main(List<String> arguments) {
 
   if (rest.isEmpty) {
     print('There are no links to download...');
-    return;
+    exit(0);
   }
 
   for (var link in rest) {
@@ -71,7 +70,7 @@ main(List<String> arguments) {
 }
 
 String getBestTry(String link) async {
-  var cbrs = ['64', '128', '192', '256', '320'];
+  var cbrs = availableBitRates;
   for (var i = cbrs.length - 1; i >= 0; i--) {
     http.Response res = await http.get('$link${cbrs[i]}');
     if (res.statusCode == 200) {
@@ -100,7 +99,7 @@ dl(String link, String cbr, String target) async {
 
     if (showDownloadLink) {
       print(dl);
-      return;
+      exit(0);
     }
 
     if (debug) print(dl);
@@ -115,9 +114,11 @@ dl(String link, String cbr, String target) async {
         response.pipe(new File('$target/$name.mp3').openWrite());
       } else {
         print('Resource not available');
+        exit(1);
       }
     });
   } catch (e) {
     print('An error occured, Please check your previous command');
+    exit(1);
   }
 }
