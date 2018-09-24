@@ -7,7 +7,7 @@ os:
 sudo: required
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install loc ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get install cloc ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install cloc ; fi
 after_success:
   - echo "After Success"
   - dart --snapshot=taurux.snapshot ./src/taurux.dart || exit 1
