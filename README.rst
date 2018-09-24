@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/0xflotus/taurus.svg?branch=master
-    :target: https://travis-ci.org/0xflotus/taurus
+.. image:: https://travis-ci.org/0xflotus/taurux.svg?branch=master
+    :target: https://travis-ci.org/0xflotus/taurux
     
 taurux
 ======
