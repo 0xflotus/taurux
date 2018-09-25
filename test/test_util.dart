@@ -5,7 +5,7 @@ void main() {
   test('splitLink', () {
     expect(splitLink('https://www.example.org/zeit/co'), equals('co'));
     
-    expect(splitLink('svfsd'), equals(''));
+    expect(splitLink('svfsd'), equals('svfsd'));
   });
 
   test('statusCode == 200', () {
