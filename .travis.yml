@@ -3,7 +3,7 @@ dart:
   - dev
   - stable
 dart_task:
-  - test: ./test/* --reporter expanded --verbose-trace
+  - test: ./test/* --reporter expanded
     xvfb: false
 os:
   - linux
