@@ -15,4 +15,4 @@ after_success:
   - dart ./taurux.snapshot -h || exit 1
   - if [[ "$USE_TAURUX" == "true" ]]; then ./scripts/use_taurux.sh ; fi
   - if [[ "$TEST_TAURUX" == "true" ]]; then ./scripts/start_tests.sh || exit 1 ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ./src ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cloc ./src ./test ; fi
