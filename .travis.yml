@@ -7,7 +7,6 @@ dart:
 dart_task:
   - test: ./test/
     xvfb: false
-  - dartfmt: true
 os:
   - linux
   - osx
