@@ -6,7 +6,9 @@ dart:
   - stable
 dart_task:
   - test: .test/
-os: 
+    xvfb: false
+  - dartfmt: true
+os:
   - linux
   - osx
 sudo: required
