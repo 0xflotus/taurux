@@ -22,3 +22,8 @@ Build Snapshot
 
 | ``dart --snapshot=taurux.snapshot src/taurux.dart``
 | ``dart taurux.snapshot -h``
+
+Test
+====
+
+| ``dart run test test/*``
