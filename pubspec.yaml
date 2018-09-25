@@ -1,5 +1,6 @@
 name: taurux
 description: A PoC for the Taurux App
+homepage: https://github.com/0xflotus/taurux
 version: 0.1.0
 author: 0xflotus
 
@@ -11,3 +12,5 @@ dependencies:
   html: any
   args: any
   test: any
+
+publish_to: none
