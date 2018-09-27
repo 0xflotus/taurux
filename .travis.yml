@@ -5,6 +5,7 @@ dart:
 dart_task:
   - test: ./test/* --reporter expanded
     xvfb: false
+  - dart_codecov_generator
 os:
   - linux
   - osx
