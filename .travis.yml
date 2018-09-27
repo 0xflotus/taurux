@@ -12,7 +12,6 @@ os:
 sudo: required
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install cloc ; fi
-  - pub get --packages-dir
 after_success:
   - echo "Build"
   - dart --snapshot=taurux.snapshot ./src/taurux.dart || exit 1
