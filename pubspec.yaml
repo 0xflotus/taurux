@@ -12,7 +12,5 @@ dependencies:
   html: any
   args: any
   test: any
-  coverage: "^0.7.0"
-  dart_codecov_generator: "^0.4.0"
 
 publish_to: none
