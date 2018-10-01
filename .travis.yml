@@ -4,7 +4,7 @@ dart:
   - stable
 dart_task:
   - test: ./test/* --reporter expanded
-    xvfb: false
+    xvfb: true
 os:
   - linux
   - osx
