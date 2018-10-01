@@ -6,6 +6,9 @@
 
 .. image:: https://bettercodehub.com/edge/badge/0xflotus/taurux?branch=master
    :target: https://bettercodehub.com/
+   
+.. image:: https://tokei.rs/b1/github/0xflotus/taurux
+   :target: https://github.com/0xflotus/taurux/
 
 taurux
 ======
