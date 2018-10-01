@@ -9,6 +9,18 @@
    
 .. image:: https://tokei.rs/b1/github/0xflotus/taurux
    :target: https://github.com/0xflotus/taurux/
+   
+.. image:: https://img.shields.io/github/issues/0xflotus/taurux.svg   
+   :alt: GitHub issues   
+   :target: https://github.com/0xflotus/taurux/issues
+   
+.. image:: https://img.shields.io/github/license/0xflotus/taurux.svg   
+   :alt: GitHub license   
+   :target: https://github.com/0xflotus/taurux
+   
+.. image:: https://img.shields.io/github/stars/0xflotus/taurux.svg   
+   :alt: GitHub stars   
+   :target: https://github.com/0xflotus/taurux/stargazers
 
 taurux
 ======
