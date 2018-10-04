@@ -1,6 +1,6 @@
 engines:
   duplication:
-    enabled: true
+    enabled: false
   metrics:
     enabled: true
   coverage:
