@@ -1,7 +1,7 @@
 name: taurux
 description: A PoC for the Taurux App
 homepage: https://github.com/0xflotus/taurux
-version: 0.1.1
+version: 0.1.2
 author: 0xflotus
 
 environment:
