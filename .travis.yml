@@ -1,7 +1,7 @@
 language: dart
 dart:
   - 2.4.0
-  - dev
+# - dev
   - stable
 dart_task:
   - test: ./test/* --reporter expanded
